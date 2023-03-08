@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ServerChat {
@@ -45,13 +46,18 @@ class ServerJframe extends JFrame {
 
     public void init() throws Exception {
         this.setTitle("服务器端窗口");
-        this.add(serverTa, BorderLayout.CENTER);//流式布局
+        //文本加入窗体中，采用流式布局
+        this.add(serverTa, BorderLayout.CENTER);
+        add(new JScrollPane(serverTa));
+        //将按钮加入面板中
         btnTool.add(startBtn);
         btnTool.add(stopBtn);
+        //将面板加入窗体
         this.add(btnTool, BorderLayout.SOUTH);
-
+        //设置服务器窗口出现位置
         this.setBounds(0, 0, 500, 500);
-
+        //设置服务器端文本域不可更改
+        serverTa.setEditable(false);
         //判断服务器是否已经开启
         if (isStart) {
             System.out.println("服务器已经启动了\n");
@@ -93,13 +99,8 @@ class ServerJframe extends JFrame {
                 }
             }
         });
-
-        /**
-         * 服务器窗口关闭应该停止服务器，需改进的代码
-         */
-        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // serverTa.setEditable(false);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startServer();
     }
 
@@ -130,6 +131,7 @@ class ServerJframe extends JFrame {
             e.printStackTrace();
         }
     }
+
     /**
      * 服务器停止代码
      * */
@@ -149,7 +151,6 @@ class ServerJframe extends JFrame {
     }*/
 
     /**
-     * @author 武新宇
      * @deprecated 内部类声明 对象 这个对象是属于服务器端的一个连接对象
      */
     class ClientCoon implements Runnable {

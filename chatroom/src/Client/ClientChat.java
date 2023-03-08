@@ -50,6 +50,7 @@ class ClientJframe extends JFrame {
     public void init() {
         this.setTitle("¿Í»§¶Ë´°¿Ú");
         this.add(ta, BorderLayout.CENTER);
+        add(new JScrollPane(ta));
         this.add(tf, BorderLayout.SOUTH);
         this.add(robot,BorderLayout.NORTH);
         this.setBounds(300, 300, 400, 400);
